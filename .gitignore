@@ -1,0 +1,9 @@
+/CRPG.sln
+/.vs
+/Intermediate
+/Saved
+/Plugins
+*.sln
+*_BuiltData.uasset
+/Content/ExternalContent
+/Binaries
