@@ -8,8 +8,6 @@
 #include "Components/ProgressBar.h"
 #include "CRPGGameModeBase.h"
 
-// 전체적으로 CRPGPlayerBattleWidget과 반복됨 -> 상속하기엔 상위개념이 아님 -> BaseWidget에서 구현하기에도 이상함
-
 void UCRPGPlayerBattleWidget::NativeOnInitialized()
 {
 	Super::NativeOnInitialized();
