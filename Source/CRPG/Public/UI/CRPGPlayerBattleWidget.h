@@ -8,11 +8,14 @@
 #include "CRPGPlayerBattleWidget.generated.h"
 
 class UProgressBar;
+<<<<<<< HEAD
 class UButton;
 class UVerticalBox;
 class UEditableTextBox;
 class ACRPGBaseCharacter;
 class UScrollBox;
+=======
+>>>>>>> fcfe033b76efe3c95649eaa2aec3622638e0ea57
 
 UCLASS()
 class CRPG_API UCRPGPlayerBattleWidget : public UCRPGBaseWidget
@@ -24,11 +27,18 @@ public:
 	float GetHealthPercent(AActor* DamagedActor) const;
 
 	UFUNCTION(BlueprintCallable, Category = "UI")
+<<<<<<< HEAD
 	ACRPGBaseCharacter* GetAIActor() const;
 
 	UFUNCTION(BlueprintCallable, Category = "UI")
 	ACRPGBaseCharacter* GetPlayerActor() const;
 
+=======
+	AActor* GetAIActor() const;
+
+	UFUNCTION(BlueprintCallable, Category = "UI")
+	AActor* GetPlayerActor() const;
+>>>>>>> fcfe033b76efe3c95649eaa2aec3622638e0ea57
 protected:
 	virtual void NativeOnInitialized() override;
 
@@ -40,6 +50,7 @@ protected:
 	UPROPERTY(meta = (BindWidget))
 	UProgressBar* AIHealthProgressBar;
 
+<<<<<<< HEAD
 	UPROPERTY(meta = (BindWidget))
 	UButton* FightButton;
 
@@ -61,6 +72,8 @@ protected:
 	UPROPERTY(meta = (BindWidget))
 	UButton* RunButton;
 
+=======
+>>>>>>> fcfe033b76efe3c95649eaa2aec3622638e0ea57
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "UI")
 	FLinearColor GoodColor = FLinearColor::Blue;
 
@@ -70,14 +83,18 @@ protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "UI")
 	float ColorChange = 0.3f;
 
+<<<<<<< HEAD
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Run", meta = (ClampMin = "0.0", ClampMax = "1.0"))
 	float RunSuccess = 0.7f;
 
+=======
+>>>>>>> fcfe033b76efe3c95649eaa2aec3622638e0ea57
 private:
 	void UpdateHealthBar(AActor* DamagedActor);
 
 	void OnHealthChanged(AActor* DamageCauser, AActor* DamagedActor);
 	
+<<<<<<< HEAD
 	UFUNCTION()
 	void ToggleFightButton();
 
@@ -91,4 +108,6 @@ private:
 
 	void CreateSkillButtons();
 	void CreateItemButtons();
+=======
+>>>>>>> fcfe033b76efe3c95649eaa2aec3622638e0ea57
 };

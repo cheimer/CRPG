@@ -19,7 +19,11 @@ AActor* UCRPGAIPerceptionComponent::GetPlayerActor() const
 
 	for (const auto PerceiveActor : PerceiveActors)
 	{
+<<<<<<< HEAD
 		if (Cast<ACRPGPlayerCharacter>(PerceiveActor))
+=======
+		if (Cast<ACRPGPlayerCharacter>(PerceiveActor) != nullptr)
+>>>>>>> fcfe033b76efe3c95649eaa2aec3622638e0ea57
 		{
 			return PerceiveActor;
 		}

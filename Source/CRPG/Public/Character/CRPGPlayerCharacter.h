@@ -8,7 +8,10 @@
 
 class UCameraComponent;
 class USpringArmComponent;
+<<<<<<< HEAD
 class UCRPGItemComponent;
+=======
+>>>>>>> fcfe033b76efe3c95649eaa2aec3622638e0ea57
 
 UCLASS()
 class CRPG_API ACRPGPlayerCharacter : public ACRPGBaseCharacter
@@ -24,8 +27,11 @@ public:
 
 	void InFieldMode();
 
+<<<<<<< HEAD
 	void UseItem(FText ItemName);
 
+=======
+>>>>>>> fcfe033b76efe3c95649eaa2aec3622638e0ea57
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components")
 	UCameraComponent* CameraComponent;
@@ -33,11 +39,16 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components")
 	USpringArmComponent* SpringArmComponent;
 
+<<<<<<< HEAD
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components")
 	UCRPGItemComponent* ItemComponent;
 
 	virtual void NotifyHit(class UPrimitiveComponent* MyComp, AActor* Other, class UPrimitiveComponent* OtherComp, 
 	bool bSelfMoved, FVector HitLocation, FVector HitNormal, FVector NormalImpulse, const FHitResult& Hit) override;
+=======
+	virtual void NotifyHit(class UPrimitiveComponent* MyComp, AActor* Other, class UPrimitiveComponent* OtherComp, 
+		bool bSelfMoved, FVector HitLocation, FVector HitNormal, FVector NormalImpulse, const FHitResult& Hit) override;
+>>>>>>> fcfe033b76efe3c95649eaa2aec3622638e0ea57
 
 	virtual void OnDeath() override;
 

@@ -22,6 +22,10 @@ void ACRPGGameModeBase::StartPlay()
 	Super::StartPlay();
 
 	SpawnAI();
+<<<<<<< HEAD
+=======
+
+>>>>>>> fcfe033b76efe3c95649eaa2aec3622638e0ea57
 }
 
 UClass* ACRPGGameModeBase::GetDefaultPawnClassForController_Implementation(AController* InController)
@@ -45,6 +49,10 @@ void ACRPGGameModeBase::SpawnAI()
 		const auto CRPGAIController = GetWorld()->SpawnActor<AAIController>(AIControllerClass, SpawnInfo);
 		RestartPlayer(CRPGAIController);
 	}
+<<<<<<< HEAD
+=======
+
+>>>>>>> fcfe033b76efe3c95649eaa2aec3622638e0ea57
 }
 
 void ACRPGGameModeBase::DeadByAttack(AActor* DamageCauser, AActor* DamagedActor)
@@ -55,6 +63,7 @@ void ACRPGGameModeBase::DeadByAttack(AActor* DamageCauser, AActor* DamagedActor)
 	}
 }
 
+<<<<<<< HEAD
 void ACRPGGameModeBase::EscapeBattle()
 {
 	GetWorld()->GetTimerManager().SetTimer(EscapeTimerHandle, this, &ACRPGGameModeBase::SetBattleToField, 3.0f, false);
@@ -65,6 +74,8 @@ void ACRPGGameModeBase::EscapeBattle()
 
 }
 
+=======
+>>>>>>> fcfe033b76efe3c95649eaa2aec3622638e0ea57
 void ACRPGGameModeBase::SetBattleToField()
 {
 	const auto Controller = Cast<ACRPGPlayerController>(GetWorld()->GetFirstPlayerController());

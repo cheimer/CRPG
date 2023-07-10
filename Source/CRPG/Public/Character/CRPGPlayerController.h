@@ -17,7 +17,10 @@ public:
 
 protected:
 	virtual void SetupInputComponent() override;
+<<<<<<< HEAD
 	virtual void BeginPlay() override;
+=======
+>>>>>>> fcfe033b76efe3c95649eaa2aec3622638e0ea57
 
 private:
 	void OnClickScreen();

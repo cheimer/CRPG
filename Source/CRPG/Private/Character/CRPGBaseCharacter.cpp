@@ -7,10 +7,17 @@
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "Animation/CRPGAttackAnimNotify.h"
+<<<<<<< HEAD
 #include "Animation/AnimInstance.h"
 #include "Kismet/KismetMathLibrary.h"
 #include "CRPGGameModeBase.h"
 #include "UI/CRPGPlayerBattleWidget.h"
+=======
+#include "G:\UE\ShootThemUp\Intermediate\ProjectFiles\AnimUtils.h"
+#include "Animation/AnimInstance.h"
+#include "Kismet/KismetMathLibrary.h"
+#include "CRPGGameModeBase.h"
+>>>>>>> fcfe033b76efe3c95649eaa2aec3622638e0ea57
 
 ACRPGBaseCharacter::ACRPGBaseCharacter()
 {
@@ -34,6 +41,7 @@ void ACRPGBaseCharacter::BeginPlay()
 	if (!AttackNotify) return;
 
 	AttackNotify->OnNotifySignature.AddUObject(this, &ACRPGBaseCharacter::PlayDamagedAnim);
+<<<<<<< HEAD
 
 	for (int idx = 0; idx < Skills.Num(); idx++)
 	{
@@ -43,17 +51,22 @@ void ACRPGBaseCharacter::BeginPlay()
 	}
 	SkillNum = Skills.Num();
 	CurrentSkillIndex = 0;
+=======
+>>>>>>> fcfe033b76efe3c95649eaa2aec3622638e0ea57
 }
 
 void ACRPGBaseCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+<<<<<<< HEAD
 	// 임시 조치
 	if (CurrentSkillIndex == SkillNum)
 	{
 		CurrentSkillIndexReset();
 	}
+=======
+>>>>>>> fcfe033b76efe3c95649eaa2aec3622638e0ea57
 }
 
 void ACRPGBaseCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
@@ -119,6 +132,7 @@ void ACRPGBaseCharacter::PlayDamagedAnim(USkeletalMeshComponent* MeshComponent)
 	{
 		PlayAnimMontage(DamagedAnimArray[RandInt]);
 	}
+<<<<<<< HEAD
 }
 
 
@@ -179,3 +193,7 @@ bool ACRPGBaseCharacter::CanUseSkill(int Index)
 
 	return true;
 }
+=======
+
+}
+>>>>>>> fcfe033b76efe3c95649eaa2aec3622638e0ea57
