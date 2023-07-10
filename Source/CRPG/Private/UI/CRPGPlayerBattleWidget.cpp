@@ -7,7 +7,6 @@
 #include "AI/CRPGAICharacter.h"
 #include "Components/ProgressBar.h"
 #include "CRPGGameModeBase.h"
-<<<<<<< HEAD
 #include "Components/Button.h"
 #include "Components/VerticalBox.h"
 #include "Components/CRPGAttackComponent.h"
@@ -16,8 +15,6 @@
 #include "UI/CRPGTextBoxWidget.h"
 #include "Components/ScrollBox.h"
 #include "Components/CRPGItemComponent.h"
-=======
->>>>>>> fcfe033b76efe3c95649eaa2aec3622638e0ea57
 
 void UCRPGPlayerBattleWidget::NativeOnInitialized()
 {
@@ -25,7 +22,6 @@ void UCRPGPlayerBattleWidget::NativeOnInitialized()
 
 	PlayerHealthProgressBar->SetFillColorAndOpacity(GoodColor);
 	AIHealthProgressBar->SetFillColorAndOpacity(GoodColor);
-<<<<<<< HEAD
 
 	if (FightButton)
 	{
@@ -42,8 +38,6 @@ void UCRPGPlayerBattleWidget::NativeOnInitialized()
 		RunButton->OnClicked.AddDynamic(this, &UCRPGPlayerBattleWidget::TryEscapeBattle);
 	}
 
-=======
->>>>>>> fcfe033b76efe3c95649eaa2aec3622638e0ea57
 }
 
 float UCRPGPlayerBattleWidget::GetHealthPercent(AActor* DamagedActor) const
@@ -51,10 +45,6 @@ float UCRPGPlayerBattleWidget::GetHealthPercent(AActor* DamagedActor) const
 	const auto CurrentCharacter = Cast<ACRPGBaseCharacter>(DamagedActor);
 	if (!CurrentCharacter) return 0.0f;
 
-<<<<<<< HEAD
-=======
-	// 여러마리 나오게 하는 설정 중에 2마리 잡고서 화면 전환 전에 튕김
->>>>>>> fcfe033b76efe3c95649eaa2aec3622638e0ea57
 	const auto HealthComponent = CurrentCharacter->FindComponentByClass<UCRPGHealthComponent>();
 	if (!HealthComponent) return 0.0f;
 
@@ -76,22 +66,14 @@ void UCRPGPlayerBattleWidget::OnHealthChanged(AActor* DamageCauser, AActor* Dama
 	UpdateHealthBar(DamagedActor);
 }
 
-<<<<<<< HEAD
 ACRPGBaseCharacter* UCRPGPlayerBattleWidget::GetAIActor() const
-=======
-AActor* UCRPGPlayerBattleWidget::GetAIActor() const
->>>>>>> fcfe033b76efe3c95649eaa2aec3622638e0ea57
 {
 	const auto GameMode = Cast<ACRPGGameModeBase>(GetWorld()->GetAuthGameMode());
 	const auto AI = Cast<ACRPGAICharacter>(GameMode->GetAICharacter());
 	return AI;
 }
 
-<<<<<<< HEAD
 ACRPGBaseCharacter* UCRPGPlayerBattleWidget::GetPlayerActor() const
-=======
-AActor* UCRPGPlayerBattleWidget::GetPlayerActor() const
->>>>>>> fcfe033b76efe3c95649eaa2aec3622638e0ea57
 {
 	const auto GameMode = Cast<ACRPGGameModeBase>(GetWorld()->GetAuthGameMode());
 	const auto Player = Cast<ACRPGPlayerCharacter>(GameMode->GetPlayerCharacter());
@@ -123,7 +105,6 @@ void UCRPGPlayerBattleWidget::SetBaseFunc()
 	}
 	UpdateHealthBar(AI);
 }
-<<<<<<< HEAD
 
 void UCRPGPlayerBattleWidget::ToggleFightButton()
 {
@@ -280,5 +261,3 @@ void UCRPGPlayerBattleWidget::EscapeFail()
 
 	AttackComp->TurnEnd();
 }
-=======
->>>>>>> fcfe033b76efe3c95649eaa2aec3622638e0ea57

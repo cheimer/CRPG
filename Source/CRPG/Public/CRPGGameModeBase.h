@@ -41,11 +41,8 @@ public:
 	ACRPGBaseCharacter* GetPlayerCharacter() { return PlayerCharacter; }
 	ACRPGBaseCharacter* GetAICharacter() { return AICharacter; }
 
-<<<<<<< HEAD
 	void EscapeBattle();
 
-=======
->>>>>>> fcfe033b76efe3c95649eaa2aec3622638e0ea57
 protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Data")
 	int32 AINum = 3;
@@ -65,17 +62,10 @@ private:
 	ETurnUser CurrentTurn = ETurnUser::Player;
 
 	FTimerHandle DeathTimerHandle;
-<<<<<<< HEAD
 	FTimerHandle EscapeTimerHandle;
-=======
->>>>>>> fcfe033b76efe3c95649eaa2aec3622638e0ea57
 
 	ACRPGBaseCharacter* PlayerCharacter = nullptr;
 	ACRPGBaseCharacter* AICharacter = nullptr;
 
 	void SpawnAI();
-<<<<<<< HEAD
-=======
-
->>>>>>> fcfe033b76efe3c95649eaa2aec3622638e0ea57
 };

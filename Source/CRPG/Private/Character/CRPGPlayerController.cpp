@@ -10,7 +10,6 @@
 
 ACRPGPlayerController::ACRPGPlayerController()
 {
-<<<<<<< HEAD
 }
 
 void ACRPGPlayerController::BeginPlay()
@@ -21,12 +20,6 @@ void ACRPGPlayerController::BeginPlay()
 	bShowMouseCursor = false;
 }
 
-=======
-	bShowMouseCursor = false;
-}
-
-
->>>>>>> fcfe033b76efe3c95649eaa2aec3622638e0ea57
 void ACRPGPlayerController::SetupInputComponent()
 {
 	Super::SetupInputComponent();
@@ -50,15 +43,9 @@ void ACRPGPlayerController::BattleModeAttack(FHitResult Hit)
 		const auto AttackComponent = GetPawn()->FindComponentByClass<UCRPGAttackComponent>();
 		ACRPGAICharacter* AttackedActor = Cast<ACRPGAICharacter>(Hit.GetActor());
 
-<<<<<<< HEAD
 		if (AttackComponent && AttackedActor)	
 		{
 			AttackComponent->Attack(Cast<ACRPGBaseCharacter>(GetPawn()), AttackedActor);
-=======
-		if (AttackComponent && AttackedActor)
-		{
-			AttackComponent->Attack(GetPawn(), AttackedActor);
->>>>>>> fcfe033b76efe3c95649eaa2aec3622638e0ea57
 		}
 	}
 }
@@ -67,12 +54,8 @@ bool ACRPGPlayerController::IsBattleModeAttack(FHitResult Hit)
 {
 	const auto GameMode = Cast<ACRPGGameModeBase>(GetWorld()->GetAuthGameMode());
 	
-<<<<<<< HEAD
 	return  GetPawn() && Hit.GetActor() && GameMode->GetScreenMode() == EScreenMode::Battle && 
 		GameMode->GetCurrentTurn() == ETurnUser::Player &&
-=======
-	return  GetPawn() && Hit.GetActor() && GameMode->GetScreenMode() == EScreenMode::Battle && GameMode->GetCurrentTurn() == ETurnUser::Player &&
->>>>>>> fcfe033b76efe3c95649eaa2aec3622638e0ea57
 		UKismetMathLibrary::EqualEqual_ObjectObject(GameMode->GetAICharacter(), Hit.GetActor());
 }
 

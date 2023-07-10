@@ -20,10 +20,6 @@ void UCRPGHealthComponent::BeginPlay()
 	{
 		Owner->OnTakeAnyDamage.AddDynamic(this, &UCRPGHealthComponent::OnTakeDamage);
 	}
-<<<<<<< HEAD
-=======
-	
->>>>>>> fcfe033b76efe3c95649eaa2aec3622638e0ea57
 }
 
 void UCRPGHealthComponent::OnTakeDamage(AActor* DamagedActor, float Damage, const UDamageType* DamageType,
@@ -43,23 +39,11 @@ void UCRPGHealthComponent::OnTakeDamage(AActor* DamagedActor, float Damage, cons
 	{
 		PlayCameraShake();
 	}
-<<<<<<< HEAD
-=======
-
-
->>>>>>> fcfe033b76efe3c95649eaa2aec3622638e0ea57
 }
 
 void UCRPGHealthComponent::SetHealth(float NewHealth)
 {
-<<<<<<< HEAD
 	Health = FMath::Clamp(NewHealth, 0.0f, MaxHealth);
-=======
-	NewHealth = FMath::Clamp(NewHealth, 0.0f, MaxHealth);
-
-	Health = NewHealth;
-
->>>>>>> fcfe033b76efe3c95649eaa2aec3622638e0ea57
 }
 
 void UCRPGHealthComponent::PlayCameraShake()
@@ -72,7 +56,6 @@ void UCRPGHealthComponent::PlayCameraShake()
 
 	Controller->PlayerCameraManager->StartCameraShake(CameraShake);
 }
-<<<<<<< HEAD
 
 bool UCRPGHealthComponent::IsMaxHP()
 {
@@ -83,5 +66,3 @@ void UCRPGHealthComponent::HealHP(float HealAmount)
 {
 	Health = FMath::Clamp(Health + HealAmount, 0.0f, MaxHealth);
 }
-=======
->>>>>>> fcfe033b76efe3c95649eaa2aec3622638e0ea57

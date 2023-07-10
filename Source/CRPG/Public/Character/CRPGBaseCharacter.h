@@ -4,18 +4,12 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
-<<<<<<< HEAD
 #include "CRPGCoreTypes.h"
-=======
->>>>>>> fcfe033b76efe3c95649eaa2aec3622638e0ea57
 #include "CRPGBaseCharacter.generated.h"
 
 class UCRPGHealthComponent;
 class UCRPGAttackComponent;
-<<<<<<< HEAD
 class UUserWidget;
-=======
->>>>>>> fcfe033b76efe3c95649eaa2aec3622638e0ea57
 
 UCLASS()
 class CRPG_API ACRPGBaseCharacter : public ACharacter
@@ -25,7 +19,6 @@ class CRPG_API ACRPGBaseCharacter : public ACharacter
 public:
 	ACRPGBaseCharacter();
 
-<<<<<<< HEAD
 	virtual void Tick(float DeltaTime) override;
 
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
@@ -36,13 +29,10 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Movement")
 	float GetDirection() const;
 
-=======
->>>>>>> fcfe033b76efe3c95649eaa2aec3622638e0ea57
 	void PlayAttackAnim();
 
 	void PlayDamagedAnim(USkeletalMeshComponent* MeshComponent);
 
-<<<<<<< HEAD
 	FSkillData GetSkill(int32 Idx) { return Skills[Idx]; }
 	void ChangeCurrentSkill(int32 idx);
 	bool UseSkill();
@@ -58,8 +48,6 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "UI")
 	FString StatusStringGet() { return StatusString; }
 
-=======
->>>>>>> fcfe033b76efe3c95649eaa2aec3622638e0ea57
 protected:
 	virtual void BeginPlay() override;
 
@@ -72,11 +60,8 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Damage")
 	float LifeSpanTime = 5.0f;
 
-<<<<<<< HEAD
 	int32 CurrentSkillIndex = 0;
 
-=======
->>>>>>> fcfe033b76efe3c95649eaa2aec3622638e0ea57
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Component")
 	UCRPGHealthComponent* HealthComponent;
 
@@ -92,36 +77,17 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Anim")
 	TArray<UAnimMontage*> DamagedAnimArray;
 
-<<<<<<< HEAD
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Skill", meta = (ClampMin = 0.0, ClampMax = 4.0))
 	TArray<FSkillData> Skills;
 
-=======
->>>>>>> fcfe033b76efe3c95649eaa2aec3622638e0ea57
 	UFUNCTION()
 	virtual void OnDeath();
 
 	UFUNCTION()
 	virtual void OnHealthChange(AActor* DamageCauser, AActor* DamagedActor);
 
-<<<<<<< HEAD
 private:
 	bool CanUseSkill(int Index);
 
 	FString StatusString;
-=======
-public:	
-	virtual void Tick(float DeltaTime) override;
-
-	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
-
-	UFUNCTION(BlueprintCallable, Category = "Movement")
-	virtual	bool IsRunning() const;
-
-	UFUNCTION(BlueprintCallable, Category = "Movement")
-	float GetDirection() const;
-
-private:
-
->>>>>>> fcfe033b76efe3c95649eaa2aec3622638e0ea57
 };

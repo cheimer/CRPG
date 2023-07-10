@@ -16,7 +16,6 @@ enum class ETurnUser : uint8
 	Player = 0,
 	Enemy
 };
-<<<<<<< HEAD
 
 USTRUCT(BlueprintType)
 struct FSkillData
@@ -90,5 +89,3 @@ public:
 		return nullptr;
 	}
 };
-=======
->>>>>>> fcfe033b76efe3c95649eaa2aec3622638e0ea57
