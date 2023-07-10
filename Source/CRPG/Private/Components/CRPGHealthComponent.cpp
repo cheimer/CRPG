@@ -43,9 +43,7 @@ void UCRPGHealthComponent::OnTakeDamage(AActor* DamagedActor, float Damage, cons
 
 void UCRPGHealthComponent::SetHealth(float NewHealth)
 {
-	NewHealth = FMath::Clamp(NewHealth, 0.0f, MaxHealth);
-
-	Health = NewHealth;
+	Health = FMath::Clamp(NewHealth, 0.0f, MaxHealth);
 }
 
 void UCRPGHealthComponent::PlayCameraShake()
@@ -57,4 +55,14 @@ void UCRPGHealthComponent::PlayCameraShake()
 	if (!Controller || !Controller->PlayerCameraManager) return;
 
 	Controller->PlayerCameraManager->StartCameraShake(CameraShake);
+}
+
+bool UCRPGHealthComponent::IsMaxHP()
+{
+	return FMath::IsNearlyEqual(Health, MaxHealth);
+}
+
+void UCRPGHealthComponent::HealHP(float HealAmount)
+{
+	Health = FMath::Clamp(Health + HealAmount, 0.0f, MaxHealth);
 }

@@ -7,10 +7,10 @@
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "Animation/CRPGAttackAnimNotify.h"
-#include "G:\UE\ShootThemUp\Intermediate\ProjectFiles\AnimUtils.h"
 #include "Animation/AnimInstance.h"
 #include "Kismet/KismetMathLibrary.h"
 #include "CRPGGameModeBase.h"
+#include "UI/CRPGPlayerBattleWidget.h"
 
 ACRPGBaseCharacter::ACRPGBaseCharacter()
 {
@@ -34,12 +34,26 @@ void ACRPGBaseCharacter::BeginPlay()
 	if (!AttackNotify) return;
 
 	AttackNotify->OnNotifySignature.AddUObject(this, &ACRPGBaseCharacter::PlayDamagedAnim);
+
+	for (int idx = 0; idx < Skills.Num(); idx++)
+	{
+		Skills[idx].LeftCount = Skills[idx].MaxCount;
+		Skills[idx].LeftCool = 0;
+		Skills[idx].SkillIndex = idx;
+	}
+	SkillNum = Skills.Num();
+	CurrentSkillIndex = 0;
 }
 
 void ACRPGBaseCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+	// 임시 조치
+	if (CurrentSkillIndex == SkillNum)
+	{
+		CurrentSkillIndexReset();
+	}
 }
 
 void ACRPGBaseCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
@@ -105,4 +119,63 @@ void ACRPGBaseCharacter::PlayDamagedAnim(USkeletalMeshComponent* MeshComponent)
 	{
 		PlayAnimMontage(DamagedAnimArray[RandInt]);
 	}
+}
+
+
+void ACRPGBaseCharacter::ChangeCurrentSkill(int32 Idx)
+{
+	if (!CanUseSkill(Idx))
+		return;
+
+	FString str = "Current Skill : ";
+	str.Append(Skills[Idx].Name.ToString());
+
+	StatusStringSet(str);
+	CurrentSkillIndex = Idx;
+}
+
+bool ACRPGBaseCharacter::UseSkill()
+{
+	if (!CanUseSkill(CurrentSkillIndex))
+		return false;
+
+	for (int i = 0; i < SkillNum; i++)
+	{
+		if (Skills[i].LeftCool != 0)
+		{
+			Skills[i].LeftCool--;
+		}
+	}
+
+	Skills[CurrentSkillIndex].LeftCount--;
+	Skills[CurrentSkillIndex].LeftCool = Skills[CurrentSkillIndex].CoolTime;
+
+	return true;
+}
+
+bool ACRPGBaseCharacter::CanUseSkill(int Index)
+{
+	if (Skills[Index].Limited && Skills[Index].LeftCount <= 0)
+	{
+		FString str = "Not Remain Skill Count\n";
+		str.Append("Current Skill : ");
+		str.Append(Skills[CurrentSkillIndex].Name.ToString());
+
+		StatusStringSet(str);
+		return false;
+	}
+	if (Skills[Index].LeftCool > 0)
+	{
+		FString str = "Skill Cool Unready ";
+		str.Append(FString::FromInt(Skills[Index].LeftCool));
+		str.Append(" / ");
+		str.Append(FString::FromInt(Skills[Index].CoolTime));
+		str.Append("\nCurrent Skill : ");
+		str.Append(Skills[CurrentSkillIndex].Name.ToString());
+
+		StatusStringSet(str);
+		return false;
+	}
+
+	return true;
 }

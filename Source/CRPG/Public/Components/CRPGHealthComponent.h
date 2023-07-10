@@ -27,6 +27,9 @@ public:
 
 	bool IsDead() const { return FMath::IsNearlyZero(Health); }
 
+	bool IsMaxHP();
+	void HealHP(float HealAmount);
+
 protected:
 	virtual void BeginPlay() override;
 

@@ -7,6 +7,7 @@
 #include "CRPGGameModeBase.h"
 #include "Kismet/KismetMathLibrary.h"
 #include "Components/CRPGHealthComponent.h"
+#include "Components/CRPGItemComponent.h"
 
 ACRPGPlayerCharacter::ACRPGPlayerCharacter()
 {
@@ -15,6 +16,8 @@ ACRPGPlayerCharacter::ACRPGPlayerCharacter()
 
 	CameraComponent = CreateDefaultSubobject<UCameraComponent>("CameraComponent");
 	CameraComponent->SetupAttachment(SpringArmComponent);
+
+	ItemComponent = CreateDefaultSubobject<UCRPGItemComponent>("ItemComponent");
 
 	bUseControllerRotationYaw = false;
 	SpringArmComponent->TargetArmLength = FieldArmLength;
@@ -113,6 +116,12 @@ void ACRPGPlayerCharacter::InBattleMode(AActor* Other)
 	{
 		Cast<APlayerController>(GetController())->bShowMouseCursor = true;
 	}
+
+	const auto Player = GameMode->GetPlayerCharacter();
+	FString str = "Current Skill : ";
+	str.Append(Skills[CurrentSkillIndex].Name.ToString());
+
+	StatusStringSet(str);
 }
 
 void ACRPGPlayerCharacter::InFieldMode()
@@ -153,6 +162,8 @@ void ACRPGPlayerCharacter::AllMovementActivate(bool IsActive)
 				It->Get()->GetPawn()->GetMovementComponent()->Deactivate();
 		}
 	}
+
+	
 }
 
 void ACRPGPlayerCharacter::OnDeath()
@@ -164,5 +175,11 @@ void ACRPGPlayerCharacter::OnDeath()
 	const auto GameMode = Cast<ACRPGGameModeBase>(GetWorld()->GetAuthGameMode());
 
 	GameMode->ChangeMode(EScreenMode::GameOver);
+
+}
+
+void ACRPGPlayerCharacter::UseItem(FText ItemName)
+{
+	ItemComponent->UseItem(ItemName);
 
 }

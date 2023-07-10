@@ -49,5 +49,4 @@ void UCRPGPlayerFieldWidget::SetBaseFunc()
 			PlayerHealthComponent->OnHealthChangeSignature.AddUObject(this, &UCRPGPlayerFieldWidget::OnHealthChanged);
 		}
 	}
-	UpdateHealthBar();
 }

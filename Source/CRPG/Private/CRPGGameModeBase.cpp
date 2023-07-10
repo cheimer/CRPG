@@ -55,6 +55,16 @@ void ACRPGGameModeBase::DeadByAttack(AActor* DamageCauser, AActor* DamagedActor)
 	}
 }
 
+void ACRPGGameModeBase::EscapeBattle()
+{
+	GetWorld()->GetTimerManager().SetTimer(EscapeTimerHandle, this, &ACRPGGameModeBase::SetBattleToField, 3.0f, false);
+	
+	if (!PlayerCharacter || !PlayerCharacter->GetController()) return;
+	
+	const auto PlayerController = PlayerCharacter->GetController<APlayerController>();
+
+}
+
 void ACRPGGameModeBase::SetBattleToField()
 {
 	const auto Controller = Cast<ACRPGPlayerController>(GetWorld()->GetFirstPlayerController());

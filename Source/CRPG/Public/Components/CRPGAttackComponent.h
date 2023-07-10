@@ -6,6 +6,8 @@
 #include "Components/ActorComponent.h"
 #include "CRPGAttackComponent.generated.h"
 
+class ACRPGBaseCharacter;
+
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class CRPG_API UCRPGAttackComponent : public UActorComponent
 {
@@ -14,17 +16,13 @@ class CRPG_API UCRPGAttackComponent : public UActorComponent
 public:	
 	UCRPGAttackComponent();
 
-	float GetBaseDamage() { return BaseDamage; }
+	void Attack(ACRPGBaseCharacter* DamageCauser, ACRPGBaseCharacter* DamagedActor);
 
-	void Attack(AActor* DamageCauser, AActor* DamagedActor);
+	void TurnEnd();
 
 protected:
 	virtual void BeginPlay() override;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Attack")
-	float BaseDamage = 10.0f;
-
 private:
-	float DamageCalc();
-	void TurnEnd(AActor* DamageCauser);
+	float DamageCalc(ACRPGBaseCharacter* DamageCauser);
 };

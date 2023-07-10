@@ -4,7 +4,7 @@
 #include "Components/CRPGAttackComponent.h"
 #include "Components/CRPGHealthComponent.h"
 #include "Character/CRPGBaseCharacter.h"
-#include "DamageType/CRPGSmallBite.h"
+#include "DamageType/CRPGBloodingDamage.h"
 #include "CRPGGameModeBase.h"
 #include "CRPGCoreTypes.h"
 
@@ -14,15 +14,13 @@ UCRPGAttackComponent::UCRPGAttackComponent()
 
 }
 
-
 void UCRPGAttackComponent::BeginPlay()
 {
 	Super::BeginPlay();
 
-	
 }
 
-void UCRPGAttackComponent::Attack(AActor* DamageCauser, AActor* DamagedActor)
+void UCRPGAttackComponent::Attack(ACRPGBaseCharacter* DamageCauser, ACRPGBaseCharacter* DamagedActor)
 {
 	const auto Owner = Cast<ACRPGBaseCharacter>(GetOwner());
 	if (!Owner) return;
@@ -30,20 +28,26 @@ void UCRPGAttackComponent::Attack(AActor* DamageCauser, AActor* DamagedActor)
 	const auto DamagedHealthComponent = DamagedActor->FindComponentByClass<UCRPGHealthComponent>();
 	if (!DamagedHealthComponent) return;
 
-	DamagedActor->TakeDamage(DamageCalc(), FDamageEvent::FDamageEvent(), Owner->GetController(), Owner);
+	//FDamageEvent DEvent;
+	//DEvent.DamageTypeClass = UCRPGBloodingDamage::StaticClass();
 
-	TurnEnd(DamageCauser);
+	if (!DamageCauser->UseSkill())
+		return;
+
+	DamagedActor->TakeDamage(DamageCalc(DamageCauser), FDamageEvent::FDamageEvent(), Owner->GetController(), Owner);
+
+	TurnEnd();
 	
 	Owner->PlayAttackAnim();
 
 }
 
-float UCRPGAttackComponent::DamageCalc()
+float UCRPGAttackComponent::DamageCalc(ACRPGBaseCharacter* DamageCauser)
 {
-	return BaseDamage;
+	return DamageCauser->GetSkill(DamageCauser->GetCurrentSkillIndex()).Damage;
 }
 
-void UCRPGAttackComponent::TurnEnd(AActor* DamageCauser)
+void UCRPGAttackComponent::TurnEnd()
 {
 	const auto GameMode = Cast<ACRPGGameModeBase>(GetWorld()->GetAuthGameMode());
 	if (!GameMode) return;

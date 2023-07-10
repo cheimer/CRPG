@@ -7,6 +7,14 @@
 #include "AI/CRPGAICharacter.h"
 #include "Components/ProgressBar.h"
 #include "CRPGGameModeBase.h"
+#include "Components/Button.h"
+#include "Components/VerticalBox.h"
+#include "Components/CRPGAttackComponent.h"
+#include "UI/CRPGSkillButtonWidget.h"
+#include "UI/CRPGItemButtonWidget.h"
+#include "UI/CRPGTextBoxWidget.h"
+#include "Components/ScrollBox.h"
+#include "Components/CRPGItemComponent.h"
 
 void UCRPGPlayerBattleWidget::NativeOnInitialized()
 {
@@ -14,6 +22,22 @@ void UCRPGPlayerBattleWidget::NativeOnInitialized()
 
 	PlayerHealthProgressBar->SetFillColorAndOpacity(GoodColor);
 	AIHealthProgressBar->SetFillColorAndOpacity(GoodColor);
+
+	if (FightButton)
+	{
+		FightButton->OnClicked.AddDynamic(this, &UCRPGPlayerBattleWidget::ToggleFightButton);
+	}
+
+	if (ItemButton)
+	{
+		ItemButton->OnClicked.AddDynamic(this, &UCRPGPlayerBattleWidget::ToggleItemButton);
+	}
+
+	if (RunButton)
+	{
+		RunButton->OnClicked.AddDynamic(this, &UCRPGPlayerBattleWidget::TryEscapeBattle);
+	}
+
 }
 
 float UCRPGPlayerBattleWidget::GetHealthPercent(AActor* DamagedActor) const
@@ -42,14 +66,14 @@ void UCRPGPlayerBattleWidget::OnHealthChanged(AActor* DamageCauser, AActor* Dama
 	UpdateHealthBar(DamagedActor);
 }
 
-AActor* UCRPGPlayerBattleWidget::GetAIActor() const
+ACRPGBaseCharacter* UCRPGPlayerBattleWidget::GetAIActor() const
 {
 	const auto GameMode = Cast<ACRPGGameModeBase>(GetWorld()->GetAuthGameMode());
 	const auto AI = Cast<ACRPGAICharacter>(GameMode->GetAICharacter());
 	return AI;
 }
 
-AActor* UCRPGPlayerBattleWidget::GetPlayerActor() const
+ACRPGBaseCharacter* UCRPGPlayerBattleWidget::GetPlayerActor() const
 {
 	const auto GameMode = Cast<ACRPGGameModeBase>(GetWorld()->GetAuthGameMode());
 	const auto Player = Cast<ACRPGPlayerCharacter>(GameMode->GetPlayerCharacter());
@@ -80,4 +104,160 @@ void UCRPGPlayerBattleWidget::SetBaseFunc()
 		}
 	}
 	UpdateHealthBar(AI);
+}
+
+void UCRPGPlayerBattleWidget::ToggleFightButton()
+{
+	if (!SkillButtonsBox || !SkillButtonClass) return;
+
+	if (SkillButtonsBox->GetChildrenCount() == 0)
+	{
+		CreateSkillButtons();
+	}
+
+	if (SkillButtonsBox->GetVisibility() == ESlateVisibility::Visible)
+	{
+		SkillButtonsBox->SetVisibility(ESlateVisibility::Hidden);
+	}
+	else
+	{
+		SkillButtonsBox->SetVisibility(ESlateVisibility::Visible);
+
+		const auto SkillButtons = SkillButtonsBox->GetAllChildren();
+
+		for (const auto SkillButton : SkillButtons)
+		{
+			const auto SBWidget = Cast<UCRPGSkillButtonWidget>(SkillButton);
+			if (!SBWidget)
+			{
+				continue;
+			}
+
+			SBWidget->SkillSetting();
+			SBWidget->SkillTextSetting();
+		}
+	}
+}
+
+void UCRPGPlayerBattleWidget::CreateSkillButtons()
+{
+	const auto Player = GetPlayerActor();
+	if (!Player) return;
+
+	for (int idx = 0; idx < Player->SkillNum; idx++)
+	{
+		const auto SkillButton = CreateWidget<UCRPGSkillButtonWidget>(GetWorld(), SkillButtonClass);
+
+		if (SkillButton)
+		{
+			SkillButtonsBox->AddChild(SkillButton);
+		}
+	}
+}
+
+void UCRPGPlayerBattleWidget::ToggleItemButton()
+{
+	if (!ItemScrollBox || !ItemButtonClass) return;
+
+	if (ItemScrollBox->GetChildrenCount() == 0)
+	{
+		CreateItemButtons();
+	}
+
+	if (ItemScrollBox->GetVisibility() == ESlateVisibility::Visible)
+	{
+		ItemScrollBox->SetVisibility(ESlateVisibility::Hidden);
+	}
+	else
+	{
+		ItemScrollBox->SetVisibility(ESlateVisibility::Visible);
+
+		const auto ItemButtons = ItemScrollBox->GetAllChildren();
+
+		for (const auto ItemButtonIndex : ItemButtons)
+		{
+			const auto IBWidget = Cast<UCRPGItemButtonWidget>(ItemButtonIndex);
+			if (!IBWidget)
+			{
+				continue;
+			}
+
+			IBWidget->ItemSetting();
+			IBWidget->ItemTextSetting();
+		}
+	}
+}
+
+void UCRPGPlayerBattleWidget::CreateItemButtons()
+{
+	const auto Player = GetPlayerActor();
+	if (!Player) return;
+
+	const auto ItemComp = Cast<UCRPGItemComponent>(Player->GetComponentByClass(UCRPGItemComponent::StaticClass()));
+	if (!ItemComp) return;
+
+	for (int idx = 0; idx < ItemComp->GetItemNum(); idx++)
+	{
+		const auto ItemButtonWidget = CreateWidget<UCRPGItemButtonWidget>(GetWorld(), ItemButtonClass);
+
+		if (ItemButtonWidget)
+		{
+			ItemScrollBox->AddChild(ItemButtonWidget);
+		}
+	}
+}
+
+void UCRPGPlayerBattleWidget::TryEscapeBattle()
+{
+	if (!GetWorld()) return;
+
+	const auto GameMode = Cast<ACRPGGameModeBase>(GetWorld()->GetAuthGameMode());
+	if (!GameMode) return;
+
+	if (GameMode->GetCurrentTurn() == ETurnUser::Enemy)
+		return;
+
+	float RandNum = FMath::RandRange(0.0f, 1.0f);
+
+	if (RandNum <= RunSuccess)
+	{
+		EscapeSuccess();
+	}
+	else
+	{
+		EscapeFail();
+	}
+
+}
+
+void UCRPGPlayerBattleWidget::EscapeSuccess()
+{
+	if (!GetWorld()) return;
+
+	const auto GameMode = Cast<ACRPGGameModeBase>(GetWorld()->GetAuthGameMode());
+	if (!GameMode) return;
+
+	const auto Player = GetPlayerActor();
+	if (!Player) return;
+
+	Player->StatusStringSet("Escape Success");
+	GameMode->EscapeBattle();
+}
+
+void UCRPGPlayerBattleWidget::EscapeFail()
+{
+	if (!GetWorld()) return;
+
+	const auto GameMode = Cast<ACRPGGameModeBase>(GetWorld()->GetAuthGameMode());
+	if (!GameMode) return;
+
+	const auto Player = GameMode->GetPlayerCharacter();
+	if (!Player) return;
+
+	const auto AttackComp = Cast<UCRPGAttackComponent>(Player->GetComponentByClass(UCRPGAttackComponent::StaticClass()));
+	if (!AttackComp) return;
+
+	Player->StatusStringSet("Escape Fail");
+
+	AttackComp->TurnEnd();
 }

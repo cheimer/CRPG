@@ -10,9 +10,15 @@
 
 ACRPGPlayerController::ACRPGPlayerController()
 {
-	bShowMouseCursor = false;
 }
 
+void ACRPGPlayerController::BeginPlay()
+{
+	Super::BeginPlay();
+
+	SetInputMode(FInputModeGameAndUI());
+	bShowMouseCursor = false;
+}
 
 void ACRPGPlayerController::SetupInputComponent()
 {
@@ -37,9 +43,9 @@ void ACRPGPlayerController::BattleModeAttack(FHitResult Hit)
 		const auto AttackComponent = GetPawn()->FindComponentByClass<UCRPGAttackComponent>();
 		ACRPGAICharacter* AttackedActor = Cast<ACRPGAICharacter>(Hit.GetActor());
 
-		if (AttackComponent && AttackedActor)
+		if (AttackComponent && AttackedActor)	
 		{
-			AttackComponent->Attack(GetPawn(), AttackedActor);
+			AttackComponent->Attack(Cast<ACRPGBaseCharacter>(GetPawn()), AttackedActor);
 		}
 	}
 }

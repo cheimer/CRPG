@@ -27,13 +27,17 @@ EBTNodeResult::Type UCRPGAttackTask::ExecuteTask(UBehaviorTreeComponent& OwnerCo
 	const auto AttackComp = TaskOwner->FindComponentByClass<UCRPGAttackComponent>();
 	if (!AttackComp) return EBTNodeResult::Failed;
 
-	AActor* DamageCauser = Cast<AActor>(Blackboard->GetValueAsObject(SelfActorKey.SelectedKeyName));
-	AActor* DamagedActor = Cast<AActor>(Blackboard->GetValueAsObject(EnemyActorKey.SelectedKeyName));
+	ACRPGBaseCharacter* DamageCauser = Cast<ACRPGBaseCharacter>(Blackboard->GetValueAsObject(SelfActorKey.SelectedKeyName));
+	ACRPGBaseCharacter* DamagedActor = Cast<ACRPGBaseCharacter>(Blackboard->GetValueAsObject(EnemyActorKey.SelectedKeyName));
 
+	//UE_LOG(LogTemp, Warning, TEXT("%s, %s"), *DamageCauser->GetFName().ToString(), *DamagedActor->GetFName().ToString());
+	//여기서 에러 발생 -> 공격 안함
 	if (DamageCauser && DamagedActor)
 	{
 		AttackComp->Attack(DamageCauser, DamagedActor);
 		return EBTNodeResult::Succeeded;
 	}
+
+	UE_LOG(LogTemp, Warning, TEXT("AttackTask Failed"));
 	return EBTNodeResult::Failed;
 }
