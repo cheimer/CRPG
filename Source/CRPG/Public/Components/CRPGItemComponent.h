@@ -7,7 +7,6 @@
 #include "CRPGCoreTypes.h"
 #include "CRPGItemComponent.generated.h"
 
-
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class CRPG_API UCRPGItemComponent : public UActorComponent
 {
